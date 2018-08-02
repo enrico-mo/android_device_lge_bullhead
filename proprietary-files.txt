@@ -489,7 +489,7 @@ vendor/lib{,64}/mediadrm/libdrmclearkeyplugin.so
 lib/drm/libdrmmtkplugin.so
 
 # Show Boot logos
-bin/boot_logo_updater
+#bin/boot_logo_updater
 lib/libshowlogo.so
 
 # WIDE-DHCPv6

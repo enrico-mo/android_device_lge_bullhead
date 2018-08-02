@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2018 ecSoftware
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +18,9 @@
 # Device path
 LOCAL_PATH := device/umi/MAX
 
+# TWRP. ENABLED ONLY IN RECOVERY COMPILATION
+#include $(LOCAL_PATH)/mkopt/twrp/twrp.mk
+
 # Prebuilt BOOTIMG & KERNEL
 include $(LOCAL_PATH)/prebuilts/prebuilt_kernel.mk
 
@@ -28,10 +32,6 @@ include $(LOCAL_PATH)/PlatformConfig.mk
 include $(LOCAL_PATH)/board/*.mk
 
 #######################################################################
-
-# Kernel
-TARGET_KMODULES := true
-COMMON_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
 
 # Disable memcpy opt (for audio libraries)
 TARGET_CPU_MEMCPY_OPT_DISABLE := true
@@ -51,7 +51,7 @@ EXTENDED_FONT_FOOTPRINT := true
 TARGET_PROVIDES_INIT_RC := true
 
 # system.prop
-TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
+TARGET_SYSTEM_PROP := $(LOCAL_PATH)/build.prop
 
 # Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/soc/11270000.usb3/musb-hdrc/gadget/lun%d/file

@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2018 ecSoftware
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,9 +28,6 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Common overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
-
-# Common product elements
-include $(LOCAL_PATH)/product/*.mk
 
 # Remove packages that do not work well
 PRODUCT_PACKAGES += \
