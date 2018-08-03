@@ -19,7 +19,7 @@
 LOCAL_PATH := device/umi/MAX
 
 # TWRP. ENABLED ONLY IN RECOVERY COMPILATION
-#include $(LOCAL_PATH)/mkopt/twrp/twrp.mk
+#include $(LOCAL_PATH)/twrp/twrp.mk
 
 # Prebuilt BOOTIMG & KERNEL
 include $(LOCAL_PATH)/prebuilts/prebuilt_kernel.mk
