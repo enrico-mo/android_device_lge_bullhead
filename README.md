@@ -6,22 +6,23 @@ This branch is device for building of the LineageOS.
 ---
 
 # About Device
-![UMi MAX](http://www.umidigi.com/new/Images/max/gallery_04.jpg "UMi MAX") The UMi MAX (codenamed _"MAX"_) is a mid range smartphone from UMi.
+![lge_bullhead](https://www.lg.com/us/images/cell-phones/md05230825/gallery/large06.jpg "UMi MAX") The LG Nexus 5x (codenamed _"bullhead"_) is a mid range smartphone from Lg.
 
 
 ### Specifications
 
 Component Type | Details
 -------:|:-------------------------
-CPU     | 2.0GHz Octa-Core MT6755 (Helio P10)
-GPU     | Mali-T860
-Memory  | 3GB RAM
+CPU     | Qualcomm® Snapdragon™ 808 processor, 1.8 GHz hexa-core 64-bit
+GPU     | Adreno 418
+Memory  | 2 GB LPDDR3
 Shipped Android Version | 6.0
-Storage | 32GB
-Battery | 4000 mAh
+Storage | 16 GB or 32 GB
+Battery | 2700 mAh
 Display | 5.5" 1920 x 1080 px DPI 480
-Rear Camera | 13MP (Panasonic MN34152), Dual LED Flash, Autofocus, Self-timer, ISO settings, Face detection, HDR, Panorama, Geotagging, Digital Zoom
-Front Camera | 5MP (GalaxyCore GC5005)
+Rear Camera | 12.3 MP (Panasonic MN34152), 1.55 µm Pixels, IR Laser-assisted Autofocus, f/2.0 Aperture, 4K (30 fps) Video Capture
+Front Camera | 5MP (GalaxyCore GC5005), Broad-spectrum CRI-90 Dual Flash, 1.4 µm Pixels, f/2.0 Aperture
+Dimension | 5.78" (H) x 2.85" (W) x 0.31"(D)
 
 ---
 
