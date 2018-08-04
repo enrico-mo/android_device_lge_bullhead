@@ -20,8 +20,8 @@ Shipped Android Version | 6.0
 Storage | 16 GB or 32 GB
 Battery | 2700 mAh
 Display | 5.5" 1920 x 1080 px DPI 480
-Rear Camera | 12.3 MP (Panasonic MN34152), 1.55 µm Pixels, IR Laser-assisted Autofocus, f/2.0 Aperture, 4K (30 fps) Video Capture
-Front Camera | 5MP (GalaxyCore GC5005), Broad-spectrum CRI-90 Dual Flash, 1.4 µm Pixels, f/2.0 Aperture
+Rear Camera | 12.3 MP (?), 1.55 µm Pixels, IR Laser-assisted Autofocus, f/2.0 Aperture, 4K (30 fps) Video Capture
+Front Camera | 5MP (?), Broad-spectrum CRI-90 Dual Flash, 1.4 µm Pixels, f/2.0 Aperture
 Dimension | 5.78" (H) x 2.85" (W) x 0.31"(D)
 
 ---
