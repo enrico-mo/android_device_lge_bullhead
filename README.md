@@ -6,7 +6,7 @@ This branch is device for building of the LineageOS.
 ---
 
 # About Device
-![lge_bullhead](https://www.lg.com/us/images/cell-phones/md05230825/gallery/large06.jpg "UMi MAX") The LG Nexus 5x (codenamed _"bullhead"_) is a mid range smartphone from Lg.
+![lge_bullhead](https://www.lg.com/us/images/cell-phones/md05230825/gallery/large06.jpg "LG Nexus 5x") The LG Nexus 5x (codenamed _"bullhead"_) is a mid range smartphone from Lg.
 
 
 ### Specifications
