@@ -1,7 +1,7 @@
-UMi MAX - LineageOS 13.0/AOSP
+Lg Nexus 5x - Lineage OS Device Tree
 ===============================
 
-This branch is device for building of the LineageOS 13.0 and Android Marshmallow 6.X AOSP ROMs.
+This branch is device for building of the LineageOS.
 
 ---
 
@@ -28,48 +28,13 @@ Front Camera | 5MP (GalaxyCore GC5005)
 # Build Information
 
 ### Working:
- * Hardware acceleration
- * Wi-Fi
- * Offline charging
- * Vibration
- * Audio
- * Auto brightness
- * LED
- * New screen support
- * FM Radio
- * Rotation
- * Flashlight (statusbar and camera)
- * Camera rear/front (no HDR)
- * Micro SD support
- * MTP and Mass Storage modes
- * Fast charging
+ * 
 
 ### In progress:
- * Fingerprint scanner
- * KeySwitching
- * HDR for Camera
- * Screen Recorder not working
- * WiFi tethering
- * GPS
- * AGPS
- * Bluetooth
+ * 
 
 ### Thanks to:
- * CyanogenMod team
- * Wuxianlin
- * Deepflex
- * Ferhung
- * Xen0n
- * Leskal
- * JonnyXDA
- * olegsvs
- * Visi0nary
- * andyrichardson
- * Team M.A.D
- * Rometheus
- * Flounderist
- * Moyster
- * AOUP team
+ * 
 
 ### How to build:
 Infos [here](https://github.com/AOUP-AndroidOpenUmiProject/local_manifests/tree/cm-13.0)
