@@ -168,7 +168,7 @@ BOARD_HARDWARE_CLASS := hardware/cyanogen/cmhw
 -include vendor/lge/bullhead/BoardConfigVendor.mk
 
 # TWRP
-RECOVERY_VARIANT := twrp
+#RECOVERY_VARIANT := twrp
 PRODUCT_COPY_FILES += \
     device/lge/bullhead/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
 TW_THEME := portrait_hdpi
