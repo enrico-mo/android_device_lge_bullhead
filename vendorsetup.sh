@@ -14,9 +14,4 @@
 # limitations under the License.
 #
 
-for var in eng user userdebug; do
-  add_lunch_combo lineage_bullhead-$var
-done
-
-#Ship with root access
-#export WITH_SU=true
+add_lunch_combo lineage_bullhead-userdebug

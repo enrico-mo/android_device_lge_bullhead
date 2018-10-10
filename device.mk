@@ -452,7 +452,7 @@ PRODUCT_PACKAGES += \
 
 # Modem debugger/misc
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-ifeq (,$(filter aosp_bullhead, $(TARGET_PRODUCT)))
+ifeq (,$(filter lineage_bullhead, $(TARGET_PRODUCT)))
 PRODUCT_PACKAGES += \
     QXDMLoggerV2
 endif # aosp_bullhead
