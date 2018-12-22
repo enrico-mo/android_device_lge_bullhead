@@ -292,8 +292,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio_hal.period_size=192
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=15
+    wifi.interface=wlan0
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196610
@@ -504,6 +503,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.facelock.det_timeout=2500 \
     ro.facelock.rec_timeout=3500 \
     ro.facelock.est_max_time=600
+
+# 20181219 ADDED FOR BATTERY LIFE OPTIMIZATION
+PRODUCT_PROPERTY_OVERRIDES += \
+    pm.sleep_mode=1 \
+    ro.ril.disable.power.collapse=0 \
+    wifi.supplicant_scan_interval=180
+#    wifi.supplicant_scan_interval=15
 
 $(call inherit-product-if-exists, hardware/qcom/msm8994/msm8992.mk)
 $(call inherit-product-if-exists, vendor/qcom/gpu/msm8994/msm8994-gpu-vendor.mk)

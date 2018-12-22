@@ -15,4 +15,5 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_bullhead.mk
+    $(LOCAL_DIR)/lineage_bullhead.mk\
+    $(LOCAL_DIR)/lineage_bullhead_svelte.mk

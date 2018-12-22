@@ -15,3 +15,4 @@
 #
 
 add_lunch_combo lineage_bullhead-userdebug
+add_lunch_combo lineage_bullhead_svelte-userdebug
