@@ -32,8 +32,13 @@ TARGET_NO_BOOTLOADER := true
 
 # Inline kernel
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-TARGET_KERNEL_SOURCE := kernel/lge/bullhead
-TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
+# LOS Kernel
+#TARGET_KERNEL_SOURCE := kernel/lge/bullhead
+#TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
+# Franco Kernel
+TARGET_KERNEL_SOURCE := kernel/franco/bullhead
+TARGET_KERNEL_CONFIG := franco_defconfig
+
 
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
