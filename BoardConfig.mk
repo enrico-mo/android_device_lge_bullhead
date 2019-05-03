@@ -37,7 +37,8 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 #TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
 # Franco Kernel
 TARGET_KERNEL_SOURCE := kernel/franco/bullhead
-TARGET_KERNEL_CONFIG := franco_defconfig
+#TARGET_KERNEL_CONFIG := franco_defconfig
+TARGET_KERNEL_CONFIG := bullhead_defconfig
 
 
 TARGET_KERNEL_ARCH := arm64
