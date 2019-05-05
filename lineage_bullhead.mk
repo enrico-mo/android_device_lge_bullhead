@@ -20,6 +20,10 @@
 # Get the long list of APNs
 # PRODUCT_COPY_FILES := device/lge/bullhead/apns-full-conf.xml:system/etc/apns-conf.xml
 
+# Boot animation
+TARGET_SCREEN_HEIGHT := 1920
+TARGET_SCREEN_WIDTH := 1080
+
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
@@ -41,14 +45,5 @@ $(call inherit-product-if-exists, vendor/lge/bullhead/bullhead-vendor.mk)
 PRODUCT_PACKAGES += \
     Launcher3 \
     WallpaperPicker
-
-# Boot animation
-TARGET_SCREEN_HEIGHT := 1920
-TARGET_SCREEN_WIDTH := 1080
-
-
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=bullhead \
-    PRIVATE_BUILD_DESC="bullhead-user 8.1.0 OPM7.181205.001 5080180 release-keys"
 
 BUILD_FINGERPRINT := google/bullhead/bullhead:8.1.0/OPM7.181205.001/5080180:user/release-keys

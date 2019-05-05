@@ -40,11 +40,11 @@ BOARD_KERNEL_CMDLINE += loop.max_part=7
 BOARD_KERNEL_CMDLINE += loop.max_part=7 enforcing=0 androidboot.selinux=permissive
 
 # LOS Kernel
-TARGET_KERNEL_SOURCE := kernel/lge/bullhead
-TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
+#TARGET_KERNEL_SOURCE := kernel/lge/bullhead
+#TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
 # Franco Kernel
-#TARGET_KERNEL_SOURCE := kernel/franco/bullhead
-#TARGET_KERNEL_CONFIG := franco_defconfig
+TARGET_KERNEL_SOURCE := kernel/franco/bullhead
+TARGET_KERNEL_CONFIG := franco_defconfig
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_NEEDS_VENDORIMAGE_SYMLINK := true
