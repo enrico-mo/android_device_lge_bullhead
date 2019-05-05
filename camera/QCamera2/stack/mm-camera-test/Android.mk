@@ -7,7 +7,6 @@ include $(CLEAR_VARS)
 
 # b/24171136 many files not compiling with clang/llvm yet
 LOCAL_CLANG := false
-LOCAL_CXX_STL := none
 
 LOCAL_CFLAGS:= \
         -DAMSS_VERSION=$(AMSS_VERSION) \
@@ -119,7 +118,6 @@ include $(CLEAR_VARS)
 
 # b/24171136 many files not compiling with clang/llvm yet
 LOCAL_CLANG := false
-LOCAL_CXX_STL := none
 
 LOCAL_CFLAGS:= \
         -DAMSS_VERSION=$(AMSS_VERSION) \
@@ -216,7 +214,7 @@ endif
 LOCAL_CFLAGS += -Wall -Wextra -Werror
 
 LOCAL_SHARED_LIBRARIES:= \
-         libcutils libdl libmmcamera_interface liblog
+         libcutils libdl libmmcamera_interface
 
 LOCAL_MODULE_TAGS := optional
 

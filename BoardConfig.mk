@@ -14,8 +14,6 @@
 # limitations under the License.
 #
 
-BUILD_BROKEN_DUP_RULES := true
-
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
@@ -23,12 +21,27 @@ TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := cortex-a53
 
 TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv8-a
+TARGET_2ND_ARCH_VARIANT := armv7-a-neon
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53.a57
 
 TARGET_NO_BOOTLOADER := true
+
+# Inline kernel
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+# LOS Kernel
+#TARGET_KERNEL_SOURCE := kernel/lge/bullhead
+#TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
+# Franco Kernel
+TARGET_KERNEL_SOURCE := kernel/franco/bullhead
+TARGET_KERNEL_CONFIG := franco_defconfig
+
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+
+TARGET_COMPILE_WITH_MSM_KERNEL := true
 
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
@@ -40,6 +53,8 @@ BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1 msm_poweroff.download_mode=0
 BOARD_KERNEL_CMDLINE += loop.max_part=7
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+
+BOARD_NEEDS_VENDORIMAGE_SYMLINK := true
 
 BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
@@ -104,6 +119,7 @@ OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
     ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := false
       WITH_DEXPREOPT := true
     endif
   endif
@@ -122,7 +138,7 @@ BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Build a separate vendor.img
-TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_VENDOR := system
 
 TARGET_RECOVERY_FSTAB = device/lge/bullhead/fstab.bullhead
 

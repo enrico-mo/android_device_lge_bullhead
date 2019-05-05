@@ -22,15 +22,6 @@
 # Enable support for chinook sensorhub
 TARGET_USES_CHINOOK_SENSORHUB := false
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-  LOCAL_KERNEL := device/lge/bullhead-kernel/Image.gz-dtb
-else
-  LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
-PRODUCT_COPY_FILES := \
-    $(LOCAL_KERNEL):kernel
-
 PRODUCT_COPY_FILES += \
     device/lge/bullhead/init.bullhead.rc:root/init.bullhead.rc \
     device/lge/bullhead/init.bullhead.usb.rc:root/init.bullhead.usb.rc \
@@ -83,8 +74,8 @@ PRODUCT_COPY_FILES += \
     device/lge/bullhead/uinput-fpc.kl:system/usr/keylayout/uinput-fpc.kl
 
 # for launcher layout
-PRODUCT_PACKAGES += \
-    BullheadLayout
+#PRODUCT_PACKAGES += \
+#    BullheadLayout
 
 # Prebuilt input device calibration files
 PRODUCT_COPY_FILES += \
@@ -129,13 +120,17 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version.xml
 
+# For SPN display
+PRODUCT_COPY_FILES += \
+    device/lge/bullhead/spn-conf.xml:system/etc/spn-conf.xml
+
 # For GPS
 PRODUCT_COPY_FILES += \
     device/lge/bullhead/sec_config:system/etc/sec_config
 
 # NFC config files
 PRODUCT_COPY_FILES += \
-    device/lge/bullhead/nfc/libnfc-nci.conf:system/etc/libnfc-nci.conf \
+    device/lge/bullhead/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
     device/lge/bullhead/nfc/libnfc-nxp.conf:system/etc/libnfc-nxp.conf
 
 # For WiFi
@@ -144,10 +139,6 @@ PRODUCT_COPY_FILES += \
     device/lge/bullhead/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     device/lge/bullhead/wifi/WCNSS_cfg.dat:system/etc/firmware/wlan/qca_cld/WCNSS_cfg.dat \
     device/lge/bullhead/wifi/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
-
-# MSM IRQ Balancer configuration file
-PRODUCT_COPY_FILES += \
-    device/lge/bullhead/msm_irqbalance.conf:vendor/etc/msm_irqbalance.conf
 
 # Power configuration file
 PRODUCT_COPY_FILES += \
@@ -243,13 +234,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/lge/bullhead/gps.conf:system/etc/gps.conf
 
+# GPS
+PRODUCT_PACKAGES += \
+    gps.msm8992
+
 # NFC packages
 PRODUCT_PACKAGES += \
     libnfc-nci \
     NfcNci \
     Tag \
     android.hardware.nfc@1.0-impl \
-    nfc_nci.msm8992 \
+    nfc_nci.bullhead \
 
 # Keymaster HAL
 PRODUCT_PACKAGES += \
@@ -284,7 +279,12 @@ PRODUCT_PACKAGES += \
     libqomx_core \
     mm-qcamera-app \
     android.hardware.camera.provider@2.4-impl \
-    camera.device@3.2-impl
+    camera.device@3.2-impl \
+    Snap
+
+# Snap Config
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.camera.cpp.duplication=false
 
 # Sensor & activity_recognition HAL
 TARGET_USES_NANOHUB_SENSORHAL := true
@@ -360,8 +360,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Write Manufacturer & Model information in created media files.
 # IMPORTANT: ONLY SET THIS PROPERTY TO TRUE FOR PUBLIC DEVICES
+#ifneq ($(filter aosp_bullhead% bullhead%, $(TARGET_PRODUCT)),)
 PRODUCT_PROPERTY_OVERRIDES += \
     media.recorder.show_manufacturer_and_model=true
+#else
+#$(error "you must decide whether to write manufacturer and model information into created media files for this device. ONLY ENABLE IT FOR PUBLIC DEVICE.")
+#endif  #TARGET_PRODUCT
 
 # Reduce client buffer size for fast audio output tracks
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -472,6 +476,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.data_no_toggle=1
 
+# Allow tethering without provisioning app
+PRODUCT_PROPERTY_OVERRIDES += \
+    net.tethering.noprovisioning=true
+
 # Adjust STK popup operation
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.process_sups_ind=1
@@ -558,10 +566,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vts.coverage=1
 endif
 
+# only include verity on user builds for LineageOS
+ifeq ($(TARGET_BUILD_VARIANT),user)
+   PRODUCT_COPY_FILES += device/lge/bullhead/fstab-verity.bullhead:root/fstab.bullhead
+
 # setup dm-verity configs.
 PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/platform/soc.0/f9824900.sdhci/by-name/system
-PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/platform/soc.0/f9824900.sdhci/by-name/vendor
+#PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/platform/soc.0/f9824900.sdhci/by-name/vendor
 $(call inherit-product, build/target/product/verity.mk)
+endif
 
 # OEM Unlock reporting
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -573,6 +586,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # setup dalvik vm configs.
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
+
+# facelock properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.facelock.black_timeout=700 \
+    ro.facelock.det_timeout=2500 \
+    ro.facelock.rec_timeout=3500 \
+    ro.facelock.est_max_time=600
 
 $(call inherit-product-if-exists, hardware/qcom/msm8994/msm8992.mk)
 $(call inherit-product-if-exists, vendor/qcom/gpu/msm8994/msm8994-gpu-vendor.mk)

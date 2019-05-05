@@ -14,6 +14,5 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosp_bullhead.mk \
-    $(LOCAL_DIR)/aosp_bullhead_svelte.mk
+add_lunch_combo aosp_bullhead-userdebug
+add_lunch_combo aosp_bullhead_svelte-userdebug
