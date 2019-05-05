@@ -165,28 +165,19 @@ PRODUCT_CHARACTERISTICS := nosdcard
 PRODUCT_PACKAGES += \
     charger_res_images
 
+# HIDL
+$(call inherit-product, $(LOCAL_PATH)/hidl.mk)
+
 PRODUCT_PACKAGES += \
     gralloc.msm8992 \
-    android.hardware.graphics.allocator@2.0-impl \
-    android.hardware.graphics.allocator@2.0-service \
-    android.hardware.graphics.mapper@2.0-impl \
     hwcomposer.msm8992 \
     libgenlock \
     memtrack.msm8992 \
-    android.hardware.memtrack@1.0-impl
 
 # Light HAL
 PRODUCT_PACKAGES += \
     lights.bullhead \
-    lights.vts \
-    android.hardware.light@2.0-impl
-
-# RenderScript HAL
-PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl
-
-PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-impl \
+    lights.vts
 
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
@@ -214,21 +205,10 @@ PRODUCT_PACKAGES += \
     libqcompostprocbundle \
     libvolumelistener
 
-# Dumpstate HAL
-PRODUCT_PACKAGES += \
-    android.hardware.dumpstate@1.0-service.bullhead
-
 PRODUCT_PACKAGES += \
     librmnetctl \
     rmnetcli
 
-PRODUCT_PACKAGES += \
-    android.hardware.audio@2.0-impl \
-    android.hardware.audio.effect@2.0-impl \
-    android.hardware.soundtrigger@2.0-impl
-
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.1-impl
 
 # GPS configuration
 PRODUCT_COPY_FILES += \
@@ -243,25 +223,14 @@ PRODUCT_PACKAGES += \
     libnfc-nci \
     NfcNci \
     Tag \
-    android.hardware.nfc@1.0-impl \
     nfc_nci.bullhead \
-
-# Keymaster HAL
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl
-
-# Vibrator HAL
-PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl
 
 # Fingerprint HIDL implementation
 PRODUCT_PACKAGES += \
-    fingerprint.bullhead \
-    android.hardware.biometrics.fingerprint@2.1-service
+    fingerprint.bullhead
 
 # Wi-Fi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service \
     libwpa_client \
     hostapd \
     wificond \
@@ -278,8 +247,6 @@ PRODUCT_PACKAGES += \
     libmmjpeg_interface \
     libqomx_core \
     mm-qcamera-app \
-    android.hardware.camera.provider@2.4-impl \
-    camera.device@3.2-impl \
     Snap
 
 # Snap Config
@@ -295,13 +262,7 @@ NANOHUB_SENSORHAL_DIRECT_REPORT_ENABLED := true
 PRODUCT_PACKAGES += \
     sensors.bullhead \
     activity_recognition.bullhead \
-    context_hub.default \
-    android.hardware.sensors@1.0-impl \
-    android.hardware.contexthub@1.0-impl \
-
-# new gatekeeper HAL
-PRODUCT_PACKAGES +=                         \
-    android.hardware.gatekeeper@1.0-impl    \
+    context_hub.default
 
 ifeq ($(TARGET_USES_CHINOOK_SENSORHUB),true)
 PRODUCT_PACKAGES += \
@@ -504,8 +465,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 # Bluetooth HAL
 PRODUCT_PACKAGES += \
-    libbt-vendor \
-    android.hardware.bluetooth@1.0-impl
+    libbt-vendor
 
 # limit dex2oat threads to improve thermals
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -528,21 +488,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Power HAL
 PRODUCT_PACKAGES += \
-    power.bullhead \
-    android.hardware.power@1.0-impl \
+    power.bullhead
 
 # Thermal HAL
 PRODUCT_PACKAGES += \
-    thermal.bullhead \
-    android.hardware.thermal@1.0-impl \
-
-#GNSS HAL
-PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.0-impl
-
-#USB HAL
-PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service
+    thermal.bullhead
 
 # Modem debugger/misc
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
