@@ -16,16 +16,12 @@
 PRODUCT_COPY_FILES := \
     vendor/qcom/bullhead/proprietary/ATFWD-daemon:system/bin/ATFWD-daemon:qcom \
     vendor/qcom/bullhead/proprietary/athdiag:system/bin/athdiag:qcom \
-    vendor/qcom/bullhead/proprietary/btnvtool:system/bin/btnvtool:qcom \
     vendor/qcom/bullhead/proprietary/cnd:system/bin/cnd:qcom \
     vendor/qcom/bullhead/proprietary/cnss-daemon:system/bin/cnss-daemon:qcom \
     vendor/qcom/bullhead/proprietary/cnss_diag:system/bin/cnss_diag:qcom \
     vendor/qcom/bullhead/proprietary/diag_klog:system/bin/diag_klog:qcom \
     vendor/qcom/bullhead/proprietary/diag_mdlog:system/bin/diag_mdlog:qcom \
     vendor/qcom/bullhead/proprietary/diag_qshrink4_daemon:system/bin/diag_qshrink4_daemon:qcom \
-    vendor/qcom/bullhead/proprietary/fingerprintd:system/bin/fingerprintd:qcom \
-    vendor/qcom/bullhead/proprietary/hal_proxy_daemon:system/bin/hal_proxy_daemon:qcom \
-    vendor/qcom/bullhead/proprietary/halutil:system/bin/halutil:qcom \
     vendor/qcom/bullhead/proprietary/imsdatadaemon:system/bin/imsdatadaemon:qcom \
     vendor/qcom/bullhead/proprietary/imsqmidaemon:system/bin/imsqmidaemon:qcom \
     vendor/qcom/bullhead/proprietary/ims_rtp_daemon:system/bin/ims_rtp_daemon:qcom \
@@ -66,7 +62,6 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/bullhead/proprietary/test_diag:system/bin/test_diag:qcom \
     vendor/qcom/bullhead/proprietary/thermal-engine:system/bin/thermal-engine:qcom \
     vendor/qcom/bullhead/proprietary/time_daemon:system/bin/time_daemon:qcom \
-    vendor/qcom/bullhead/proprietary/wcnss_filter:system/bin/wcnss_filter:qcom \
     vendor/qcom/bullhead/proprietary/MTP_Bluetooth_cal.acdb:system/etc/acdbdata/MTP/MTP_Bluetooth_cal.acdb:qcom \
     vendor/qcom/bullhead/proprietary/MTP_General_cal.acdb:system/etc/acdbdata/MTP/MTP_General_cal.acdb:qcom \
     vendor/qcom/bullhead/proprietary/MTP_Global_cal.acdb:system/etc/acdbdata/MTP/MTP_Global_cal.acdb:qcom \
@@ -78,9 +73,6 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/bullhead/proprietary/dsi_config.xml:system/etc/data/dsi_config.xml:qcom \
     vendor/qcom/bullhead/proprietary/netmgr_config.xml:system/etc/data/netmgr_config.xml:qcom \
     vendor/qcom/bullhead/proprietary/qmi_config.xml:system/etc/data/qmi_config.xml:qcom \
-    vendor/qcom/bullhead/proprietary/Bullhead_radio-general.cfg:system/etc/diag/Bullhead_radio-general.cfg:qcom \
-    vendor/qcom/bullhead/proprietary/ims_epdg.cfg:system/etc/diag/ims_epdg.cfg:qcom \
-    vendor/qcom/bullhead/proprietary/wlan.cfg:system/etc/diag/wlan.cfg:qcom \
     vendor/qcom/bullhead/proprietary/flp.conf:system/etc/flp.conf:qcom \
     vendor/qcom/bullhead/proprietary/izat.conf:system/etc/izat.conf:qcom \
     vendor/qcom/bullhead/proprietary/lowi.conf:system/etc/lowi.conf:qcom \
@@ -98,21 +90,11 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/bullhead/proprietary/qcrilhook.jar:system/framework/qcrilhook.jar:qcom \
     vendor/qcom/bullhead/proprietary/rcsimssettings.jar:system/framework/rcsimssettings.jar:qcom \
     vendor/qcom/bullhead/proprietary/rcsservice.jar:system/framework/rcsservice.jar:qcom \
-    vendor/qcom/bullhead/proprietary/lib64/fingerprint.bullhead.so:system/lib64/hw/fingerprint.bullhead.so:qcom \
     vendor/qcom/bullhead/proprietary/lib64/gps.msm8992.so:system/lib64/hw/gps.msm8992.so:qcom \
-    vendor/qcom/bullhead/proprietary/lib64/lib_fpc_tac_shared.so:system/lib64/lib_fpc_tac_shared.so:qcom \
     vendor/qcom/bullhead/proprietary/lib64/libgps.utils.so:system/lib64/libgps.utils.so:qcom \
     vendor/qcom/bullhead/proprietary/lib64/libiperf.so:system/lib64/libiperf.so:qcom \
-    vendor/qcom/bullhead/proprietary/lib64/libloc_core.so:system/lib64/libloc_core.so:qcom \
-    vendor/qcom/bullhead/proprietary/lib64/libloc_eng.so:system/lib64/libloc_eng.so:qcom \
-    vendor/qcom/bullhead/proprietary/lib64/libwifi-hal-qcom.so:system/lib64/libwifi-hal-qcom.so:qcom \
-    vendor/qcom/bullhead/proprietary/fingerprint.bullhead.so:system/lib/hw/fingerprint.bullhead.so:qcom \
     vendor/qcom/bullhead/proprietary/gps.msm8992.so:system/lib/hw/gps.msm8992.so:qcom \
-    vendor/qcom/bullhead/proprietary/lib_fpc_tac_shared.so:system/lib/lib_fpc_tac_shared.so:qcom \
     vendor/qcom/bullhead/proprietary/libgps.utils.so:system/lib/libgps.utils.so:qcom \
     vendor/qcom/bullhead/proprietary/libiperf.so:system/lib/libiperf.so:qcom \
-    vendor/qcom/bullhead/proprietary/libloc_core.so:system/lib/libloc_core.so:qcom \
-    vendor/qcom/bullhead/proprietary/libloc_eng.so:system/lib/libloc_eng.so:qcom \
-    vendor/qcom/bullhead/proprietary/libwifi-hal-qcom.so:system/lib/libwifi-hal-qcom.so:qcom \
     vendor/qcom/bullhead/proprietary/iperf3:system/xbin/iperf3:qcom \
 

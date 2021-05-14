@@ -762,7 +762,7 @@ const QCameraParameters::QCameraMap<int>
  *==========================================================================*/
 QCameraParameters::QCameraParameters()
     : CameraParameters(),
-      m_reprocScaleParam(this),
+      m_reprocScaleParam(),
       m_pCapability(NULL),
       m_pCamOpsTbl(NULL),
       m_pParamHeap(NULL),
@@ -871,7 +871,7 @@ QCameraParameters::QCameraParameters()
  *==========================================================================*/
 QCameraParameters::QCameraParameters(const String8 &params)
     : CameraParameters(params),
-    m_reprocScaleParam(this),
+    m_reprocScaleParam(),
     m_pCapability(NULL),
     m_pCamOpsTbl(NULL),
     m_pParamHeap(NULL),
@@ -5078,7 +5078,7 @@ int32_t QCameraParameters::initDefaultParameters()
             m_pCapability->hfr_tbl,
             m_pCapability->hfr_tbl_cnt);
     set(KEY_QC_SUPPORTED_HFR_SIZES, hfrSizeValues.string());
-    CDBG("HFR values %s HFR Sizes = %d", hfrValues.string(), hfrSizeValues.string());
+    CDBG("HFR values %s HFR Sizes = %s", hfrValues.string(), hfrSizeValues.string());
     setHighFrameRate(CAM_HFR_MODE_OFF);
 
     // Set Focus algorithms
@@ -5884,7 +5884,7 @@ int32_t  QCameraParameters::setFocusPosition(const char *typeStr, const char *po
         }
     }
 
-    ALOGE("%s, invalid params, type:%d, pos: %d", __func__, type, pos);
+    ALOGE("%s, invalid params, type:%d, pos: %f", __func__, type, pos);
     return BAD_VALUE;
 }
 
@@ -6707,7 +6707,7 @@ int32_t QCameraParameters::configFrameCapture(bool commitSettings)
  *==========================================================================*/
 int32_t QCameraParameters::resetFrameCapture(bool commitSettings)
 {
-    int32_t rc = NO_ERROR, i = 0;
+    int32_t rc = NO_ERROR;
     memset(&m_captureFrameConfig, 0, sizeof(cam_capture_frame_config_t));
 
     if (commitSettings) {
@@ -8836,6 +8836,7 @@ int32_t QCameraParameters::getStreamFormat(cam_stream_type_t streamType,
             format = m_pCapability->analysis_recommended_format;
         } else {
             ALOGE("%s:%d invalid analysis_recommended_format %d\n",
+                    __func__, __LINE__,
                     m_pCapability->analysis_recommended_format);
             format = mPreviewFormat;
         }
@@ -10606,11 +10607,9 @@ int32_t QCameraParameters::commitParamChanges()
  *
  * RETURN     : none
  *==========================================================================*/
-QCameraReprocScaleParam::QCameraReprocScaleParam(QCameraParameters *parent)
-  : mParent(parent),
-    mScaleEnabled(false),
+QCameraReprocScaleParam::QCameraReprocScaleParam()
+  : mScaleEnabled(false),
     mIsUnderScaling(false),
-    mScaleDirection(0),
     mNeedScaleCnt(0),
     mSensorSizeTblCnt(0),
     mSensorSizeTbl(NULL),

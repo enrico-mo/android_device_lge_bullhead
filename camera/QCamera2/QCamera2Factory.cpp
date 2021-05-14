@@ -58,7 +58,6 @@ QCamera2Factory *gQCamera2Factory = NULL;
  *==========================================================================*/
 QCamera2Factory::QCamera2Factory()
 {
-    camera_info info;
     mHalDescriptors = NULL;
     mCallbacks = NULL;
     mNumOfCameras = get_num_of_cameras();
@@ -78,10 +77,6 @@ QCamera2Factory::QCamera2Factory()
                 } else {
                     mHalDescriptors[i].device_version = CAMERA_DEVICE_API_VERSION_1_0;
                 }
-                //Query camera at this point in order
-                //to avoid any delays during subsequent
-                //calls to 'getCameraInfo()'
-                getCameraInfo(i, &info);
             }
         } else {
             ALOGE("%s: Not enough resources to allocate HAL descriptor table!",
@@ -379,7 +374,7 @@ int QCamera2Factory::camera_device_open(
 }
 
 struct hw_module_methods_t QCamera2Factory::mModuleMethods = {
-    open: QCamera2Factory::camera_device_open,
+    .open = QCamera2Factory::camera_device_open,
 };
 
 /*===========================================================================

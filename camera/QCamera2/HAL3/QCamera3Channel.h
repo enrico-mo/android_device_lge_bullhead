@@ -198,13 +198,13 @@ public:
     int32_t getStreamSize(cam_dimension_t &dim);
 
     QCamera3PostProcessor m_postprocessor; // post processor
+    int32_t releaseOfflineMemory(uint32_t resultFrameNumber);
 
 protected:
     bool isWNREnabled() {return m_bWNROn;};
     void startPostProc(const reprocess_config_t &reproc_cfg);
     void issueChannelCb(buffer_handle_t *resultBuffer,
             uint32_t resultFrameNumber);
-    int32_t releaseOfflineMemory(uint32_t resultFrameNumber);
 
     QCamera3StreamMem mMemory; //output buffer allocated by fwk
     camera3_stream_t *mCamera3Stream;
@@ -246,7 +246,7 @@ public:
                     uint32_t postprocess_mask,
                     QCamera3Channel *metadataChannel,
                     uint32_t numBuffers = MAX_INFLIGHT_REQUESTS);
-
+    using QCamera3ProcessingChannel::request;
     virtual ~QCamera3RegularChannel();
 
     virtual int32_t setBatchSize(uint32_t batchSize);
@@ -377,6 +377,7 @@ public:
             cam_stream_type_t stream_type,
             uint32_t postprocess_mask,
             QCamera3Channel *metadataChannel);
+    using QCamera3ProcessingChannel::request;
     ~QCamera3YUVChannel();
     virtual int32_t initialize(cam_is_type_t isType);
     virtual int32_t request(buffer_handle_t *buffer,

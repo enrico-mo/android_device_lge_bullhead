@@ -23,16 +23,19 @@
 # *not* include it on all devices, so it is safe even with hardware-specific
 # components.
 
-ifneq ($(filter bullhead, $(TARGET_DEVICE)),)
-
 LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := bullhead_wlan_mac
+wlan_mac_path := $(TARGET_OUT_ETC)/firmware/wlan/qca_cld/wlan_mac.bin
+LOCAL_POST_INSTALL_CMD := $(hide) mkdir -p $(dir $(wlan_mac_path)) && ln -sf /persist/wlan_mac.bin $(wlan_mac_path)
+wlan_mac_path :=
+include $(BUILD_PHONY_PACKAGE)
+
+ifneq ($(filter bullhead, $(TARGET_DEVICE)),)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
-# Read WiFi MAC Address from persist partition
-$(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wlan/qca_cld ; \
-	ln -sf /persist/wlan_mac.bin $(TARGET_OUT_ETC)/firmware/wlan/qca_cld/wlan_mac.bin)
-	
 DM_LIBS := libdmengine.so libdmjavaplugin.so
 DM_SYMLINKS := $(addprefix $(TARGET_OUT)/priv-app/DMService/lib/arm/,$(notdir $(DM_LIBS)))
 $(DM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -42,5 +45,15 @@ $(DM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /system/lib/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(DM_SYMLINKS)
+
+IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
+IMS_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/app/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
+$(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "IMS lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
 endif

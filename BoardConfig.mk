@@ -14,6 +14,9 @@
 # limitations under the License.
 #
 
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_PHONY_TARGETS := true
+
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
@@ -21,30 +24,27 @@ TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := cortex-a53
 
 TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv7-a-neon
+TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a53.a57
-
-ENABLE_CPUSETS := true
+TARGET_2ND_CPU_VARIANT := cortex-a53
 
 TARGET_NO_BOOTLOADER := true
 
-# Inline kernel
+WITH_DEXPREOPT := true
+DONT_DEXPREOPT_PREBUILTS := true
+
+TARGET_USE_AOSP_SURFACEFLINGER := true
+
+# Inline kernel building
+#KERNEL_TOOLCHAIN := $(shell pwd)/prebuilts/arm64-gcc/bin
+#KERNEL_TOOLCHAIN_PREFIX := aarch64-elf-
+TARGET_KERNEL_SOURCE := kernel/lge/bullhead
+TARGET_KERNEL_CONFIG := aoscp_bullhead_defconfig
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-# LOS Kernel
-#TARGET_KERNEL_SOURCE := kernel/lge/bullhead
-#TARGET_KERNEL_CONFIG := lineageos_bullhead_defconfig
-# Franco Kernel
-TARGET_KERNEL_SOURCE := kernel/franco/bullhead
-#TARGET_KERNEL_CONFIG := franco_defconfig
-TARGET_KERNEL_CONFIG := bullhead_defconfig
-
-
+TARGET_COMPILE_WITH_MSM_KERNEL := true
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-#TARGET_USES_UNCOMPRESSED_KERNEL := true
 
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_PAGESIZE    := 4096
@@ -53,15 +53,12 @@ BOARD_RAMDISK_OFFSET     := 0x02000000
 
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=bullhead boot_cpus=0-5
 BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1 msm_poweroff.download_mode=0
-
+BOARD_KERNEL_CMDLINE += loop.max_part=7 androidboot.boot_devices=soc.0/f9824900.sdhci
+#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
-
-BOARD_NEEDS_VENDORIMAGE_SYMLINK := true
-TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
-BOARD_SUPPORTS_SOUND_TRIGGER := true
 AUDIO_FEATURE_ENABLED_SPKR_PROTECTION := true
 
 BOARD_HAVE_BLUETOOTH := true
@@ -79,6 +76,7 @@ BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP  := "ap"
+WIFI_HIDL_FEATURE_DISABLE_AP_MAC_RANDOMIZATION := true
 
 BOARD_USES_SECURE_SERVICES := true
 
@@ -105,35 +103,43 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 USE_OPENGL_RENDERER := true
 TARGET_USES_ION := true
 TARGET_USES_C2D_COMPOSITION := true
-TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
-MAX_VIRTUAL_DISPLAY_DIMENSION := 2048
+TARGET_USES_GRALLOC1_ADAPTER := true
+TARGET_USES_HWC2 := true
+TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000U | 0x02000000U
+BOARD_ROOT_EXTRA_FOLDERS := persist firmware
+
+TARGET_AUX_OS_VARIANT_LIST := bullhead
 
 HAVE_ADRENO_SOURCE:= false
 
 OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 
 # Enable dex-preoptimization to speed up first boot sequence
-#ifeq ($(HOST_OS),linux)
-#  ifneq ($(TARGET_BUILD_VARIANT),eng)
-#    ifeq ($(WITH_DEXPREOPT),)
-#      WITH_DEXPREOPT := true
-#    endif
-#  endif
-#endif
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := false
+      WITH_DEXPREOPT := true
+    endif
+  endif
+endif
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 33554432
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472
+BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
+# as of 3765008, inode usage was 3011, use 4096 to be safe
+BOARD_SYSTEMIMAGE_EXTFS_INODE_COUNT := 4096
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 11649679360
 BOARD_CACHEIMAGE_PARTITION_SIZE := 100663296
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_PARTITION_SIZE := 260046848
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Build a separate vendor.img
-TARGET_COPY_OUT_VENDOR := system
-
-BOARD_HAL_STATIC_LIBRARIES := libdumpstate.bullhead
+TARGET_COPY_OUT_VENDOR := vendor
 
 TARGET_RECOVERY_FSTAB = device/lge/bullhead/fstab.bullhead
 
@@ -154,19 +160,51 @@ TARGET_USES_INTERACTION_BOOST := true
 
 TARGET_RECOVERY_UI_LIB := librecovery_ui_nanohub
 
+# Netd
+TARGET_OMIT_NETD_TETHER_FTP_HELPER := true
+
 # Force camera module to be compiled only in 32-bit mode on 64-bit systems
 # Once camera module can run in the native mode of the system (either
 # 32-bit or 64-bit), the following line should be deleted
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 
-#NFC
-NXP_CHIP_TYPE := 2
-
 #Enable peripheral manager
 TARGET_PER_MGR_ENABLED := true
 
-# CM Hardware
-BOARD_USES_CYANOGEN_HARDWARE := true
-BOARD_HARDWARE_CLASS := hardware/cyanogen/cmhw
+TARGET_FS_CONFIG_GEN += device/lge/bullhead/config.fs
 
 -include vendor/lge/bullhead/BoardConfigVendor.mk
+
+# Testing related defines
+BOARD_PERFSETUP_SCRIPT := platform_testing/scripts/perf-setup/bullhead-setup.sh
+
+DEVICE_MANIFEST_FILE := device/lge/bullhead/manifest.xml
+DEVICE_MATRIX_FILE := device/lge/bullhead/compatibility_matrix.xml
+
+ifeq ($(TARGET_PRODUCT),aosp_bullhead_svelte)
+BOARD_KERNEL_CMDLINE += mem=1024M maxcpus=2
+MALLOC_SVELTE := true
+endif
+ifeq ($(TARGET_PRODUCT),bullhead_svelte)
+BOARD_KERNEL_CMDLINE += mem=1024M
+MALLOC_SVELTE := true
+endif
+
+# Legacy blob support
+TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
+    /vendor/bin/mm-qcamera-daemon=27
+
+# Enable workaround for slow rom flash
+BOARD_SUPPRESS_SECURE_ERASE := true
+
+TARGET_USES_ALTERNATIVE_MANUAL_NETWORK_SELECT := true
+
+TARGET_FLATTEN_APEX := true
+
+# Limit cpus for blod patch
+ifeq ($(TARGET_PRODUCT),lineage_bullhead_blod)
+BOARD_KERNEL_CMDLINE += boot_cpus=0-3 maxcpus=4
+endif
+
+# Security Patch Level
+VENDOR_SECURITY_PATCH := 2018-12-05
