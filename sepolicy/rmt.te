@@ -1,12 +1,12 @@
 # remote storage process (runs as nobody)
-type rmt, domain, domain_deprecated;
-type rmt_exec, exec_type, file_type;
+type rmt, domain;
+type rmt_exec, exec_type, file_type, vendor_file_type;
 
 # Started by init
 init_daemon_domain(rmt)
 
 # Drop (user, group) to (nobody, nobody)
-allow rmt self:capability { setuid setgid dac_override setpcap net_raw };
+allow rmt self:capability { setuid setgid setpcap net_raw };
 
 # opens and reads /dev/block/mmcblk0
 allow rmt root_block_device:blk_file r_file_perms;
@@ -23,6 +23,7 @@ allow rmt self:capability sys_admin;
 allow rmt ssd_block_device:blk_file rw_file_perms;
 
 allow rmt self:socket create_socket_perms;
+allowxperm rmt self:socket ioctl msm_sock_ipc_ioctls;
 
 # Wake lock access
 wakelock_use(rmt)
@@ -31,3 +32,14 @@ wakelock_use(rmt)
 allow rmt uio_device:chr_file rw_file_perms;
 
 allow rmt mmc_block_device:blk_file r_file_perms;
+
+allow rmt debugfs_rmt_storage:dir { search read open };
+allow rmt debugfs_rmt_storage:file { read write open };
+
+allow rmt vendor_file:dir r_dir_perms;
+
+allow rmt sysfs:dir r_dir_perms;
+
+allow rmt sysfs_uio:dir r_dir_perms;
+allow rmt sysfs_uio:file rw_file_perms;
+allow rmt sysfs_uio:lnk_file r_file_perms;

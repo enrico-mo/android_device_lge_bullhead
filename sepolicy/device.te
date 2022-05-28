@@ -1,3 +1,5 @@
+#type alarm_device, dev_type, mlstrustedobject;
+
 #Define the logging device type
 type diag_device, dev_type, mlstrustedobject;
 type smem_log_device, dev_type;
@@ -6,6 +8,7 @@ type ramdump_device, dev_type;
 type smd_device, dev_type;
 
 type mmc_block_device, dev_type;
+type persist_block_device, dev_type;
 
 #device type for rmnet device nodes, ie /dev/rmnet_ctrl*
 type rmnet_device, dev_type;

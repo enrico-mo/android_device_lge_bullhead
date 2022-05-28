@@ -588,9 +588,9 @@ void *QCamera3Stream::dataProcRoutine(void *data)
             break;
         case CAMERA_CMD_TYPE_EXIT:
             CDBG_HIGH("%s: Exit", __func__);
+            pme->flushFreeBatchBufQ();
             /* flush data buf queue */
             pme->mDataQ.flush();
-            pme->flushFreeBatchBufQ();
             running = 0;
             break;
         default:
@@ -699,7 +699,7 @@ int32_t QCamera3Stream::bufRelease(int32_t index)
 
         mBufDefs[index].mem_info = NULL;
     } else {
-        ALOGE("%s: Buffer at index %d not registered", __func__);
+        ALOGE("%s: Buffer at index %d not registered", __func__, index);
         return BAD_INDEX;
     }
 
@@ -1359,7 +1359,6 @@ int32_t QCamera3Stream::aggregateBufToBatch(mm_camera_buf_def_t& bufDef)
 int32_t QCamera3Stream::queueBatchBuf()
 {
     int32_t rc = NO_ERROR;
-    struct msm_camera_user_buf_cont_t *cont_buf = NULL;
 
     if (!mCurrentBatchBufDef) {
         ALOGE("%s: No buffers were queued into batch", __func__);

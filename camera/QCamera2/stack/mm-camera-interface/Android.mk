@@ -4,8 +4,9 @@ LOCAL_PATH := $(call my-dir)
 include $(LOCAL_PATH)/../../../common.mk
 include $(CLEAR_VARS)
 
-# Too many clang warnings/errors, see b/23163853.
-LOCAL_CLANG := false
+
+LOCAL_CLANG := true
+LOCAL_CXX_STL := none
 
 MM_CAM_FILES := \
         src/mm_camera_interface.c \
@@ -24,16 +25,12 @@ ifneq (,$(filter msm8974 msm8916 msm8226 msm8610 msm8916 apq8084 msm8084 msm8994
 endif
 
 LOCAL_CFLAGS += -D_ANDROID_
-LOCAL_COPY_HEADERS_TO := mm-camera-interface
-LOCAL_COPY_HEADERS += ../common/cam_intf.h
-LOCAL_COPY_HEADERS += ../common/cam_types.h
-LOCAL_COPY_HEADERS += ../common/cam_cond.h
-LOCAL_COPY_HEADERS += ../common/cam_semaphore.h
 
 LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/inc \
     $(LOCAL_PATH)/../common \
-    system/media/camera/include
+    system/media/camera/include \
+    system/core/libutils/include
 
 LOCAL_CFLAGS += -DCAMERA_ION_HEAP_ID=ION_IOMMU_HEAP_ID
 LOCAL_C_INCLUDES+= $(kernel_includes)
@@ -52,6 +49,7 @@ LOCAL_SRC_FILES := $(MM_CAM_FILES)
 LOCAL_MODULE           := libmmcamera_interface
 LOCAL_PRELINK_MODULE   := false
 LOCAL_SHARED_LIBRARIES := libdl libcutils liblog
+LOCAL_HEADER_LIBRARIES += camera_common_headers
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)

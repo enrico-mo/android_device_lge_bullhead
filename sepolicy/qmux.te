@@ -1,6 +1,6 @@
 # Qualcomm Management Interface Multiplexer
-type qmux, domain, domain_deprecated;
-type qmux_exec, exec_type, file_type;
+type qmux, domain;
+type qmux_exec, exec_type, file_type, vendor_file_type;
 net_domain(qmux)
 
 # Started by init
@@ -21,3 +21,9 @@ wakelock_use(qmux)
 
 # Access to /sys/devices/virtual/smdpkt/smdcntl*/open_timeout
 allow qmux sysfs_smdcntl_open_timeout:file rw_file_perms;
+
+allow qmux sysfs_msm_subsys:dir r_dir_perms;
+allow qmux sysfs_msm_subsys:file rw_file_perms;
+allow qmux sysfs_msm_subsys:lnk_file r_file_perms;
+
+allow qmux vendor_file:dir r_dir_perms;
